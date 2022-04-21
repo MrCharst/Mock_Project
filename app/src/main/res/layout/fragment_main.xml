@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#F6F6F6"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.45"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_50dp" />
+
+        <ImageButton
+            android:id="@+id/imbBack"
+            android:layout_width="@dimen/_30dp"
+            android:layout_height="@dimen/_30dp"
+            android:layout_marginTop="@dimen/_30dp"
+            android:background="@drawable/ic_back"
+            android:contentDescription="@string/contentDescription"
+            app:layout_constraintStart_toStartOf="@id/guideLine"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="@dimen/_200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_49dp"
+            android:text="@string/set_up_a_monthly_budget_goal"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/guideLine"
+            app:layout_constraintTop_toBottomOf="@id/imbBack" />
+
+       <LinearLayout
+           android:layout_marginTop="@dimen/_15dp"
+           android:id="@+id/tvTotalBudget"
+           android:gravity="center"
+           app:layout_constraintStart_toStartOf="@id/guideLine"
+           app:layout_constraintTop_toBottomOf="@id/title"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+           <TextView
+               android:id="@+id/textTotal"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/total_budget_is"
+               android:textSize="@dimen/_17sp"
+             />
+           <TextView
+               android:textColor="@color/_4e4e4e"
+               android:id="@+id/tvDoLaLone"
+               android:textSize="@dimen/_19sp"
+               android:text="@string/doLa"
+               android:textStyle="bold"
+               android:layout_marginStart="@dimen/_5dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
+           <TextView
+               android:textColor="@color/_656161"
+               android:id="@+id/tvTotalMoney"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="2dp"
+               android:text="@string/_1_500"
+               android:textSize="@dimen/_20sp"
+               android:textStyle="bold" />
+       </LinearLayout>
+        <com.example.mock_off_project.custom.LinearLayoutItem
+            android:id="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/_40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTotalBudget"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_85sp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_0dp"
+        android:paddingStart="@dimen/_50dp"
+        android:paddingEnd="@dimen/_0dp"
+        android:layout_marginBottom="-50dp"
+        android:backgroundTint="@color/white"
+        android:background="@drawable/back_ground_display"
+        app:layout_constraintBottom_toTopOf="@id/bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.26"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_marginTop="@dimen/_40sp"
+            android:fontFamily="monospace"
+            android:id="@+id/tvDoLa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/doLa"
+            android:textColor="@color/_c9c9c9"
+            android:textSize="@dimen/_60sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_marginTop="@dimen/_40sp"
+            android:id="@+id/tvDisplayMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/_400_doLa"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_60sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/tvDoLa"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RelativeOverlap" />
+       <LinearLayout
+           android:layout_marginTop="@dimen/_62sp"
+           android:backgroundTint="@color/background"
+           android:background="@drawable/back_ground_save"
+           android:gravity="center"
+           android:layout_marginEnd="@dimen/_40dp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           android:layout_width="@dimen/_40dp"
+           android:layout_height="@dimen/_40dp">
+           <ImageView
+               android:layout_width="@dimen/_20dp"
+               android:layout_height="@dimen/_20dp"
+               android:contentDescription="@string/contentDescription"
+               android:src="@drawable/ic_calculator"
+              />
+       </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_0dp"
+        android:background="@drawable/background_change_money"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.34"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/toolChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <HorizontalScrollView
+                android:id="@+id/lineRuleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                tools:ignore="UselessParent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.example.mock_off_project.custom.LineRuleView
+                        android:id="@+id/lineRule"
+                        android:layout_width="@dimen/_1103dp"
+                        android:layout_height="@dimen/_55dp"
+                        android:layout_marginEnd="@dimen/_330dp"
+                        android:layout_marginStart="@dimen/_50dp"
+                        android:layout_marginTop="@dimen/_35dp" />
+                </LinearLayout>
+            </HorizontalScrollView>
+            <View
+                android:id="@+id/view"
+                android:layout_width="@dimen/_8dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_marginStart="@dimen/_48sp"
+                android:layout_marginTop="@dimen/_42dp"
+                android:background="@drawable/background_item"
+                android:backgroundTint="@color/teal_200" />
+        </RelativeLayout>
+
+<!--        //text in -->
+        <TextView
+            android:id="@+id/tvTitleIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_19dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_19sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/_50sp"
+            app:layout_constraintTop_toBottomOf="@id/toolChange" />
+
+        <TextView
+            android:id="@+id/titleIn"
+            android:layout_width="@dimen/_220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_48dp"
+            android:layout_marginTop="@dimen/_5dp"
+            android:textColor="@color/_A29DBF"
+            android:textSize="@dimen/_15sp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitleIn" />
+
+<!--        //text out-->
+        <TextView
+            android:id="@+id/tvTitleOut"
+            android:text="@string/normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_19dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_19sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/_50sp"
+            app:layout_constraintTop_toBottomOf="@id/toolChange" />
+
+        <TextView
+            android:text="@string/sometimes_you_can_eat_in_cafe_up_to_3_of_economy"
+            android:id="@+id/titleOut"
+            android:layout_width="@dimen/_200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5dp"
+            android:textColor="@color/_A29DBF"
+            android:textSize="@dimen/_15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/_50sp"
+            app:layout_constraintTop_toBottomOf="@id/tvTitleOut" />
+
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSave"
+            android:layout_width="@dimen/_80dp"
+            android:layout_height="@dimen/_80dp"
+            android:layout_marginTop="@dimen/_77dp"
+            android:layout_marginEnd="@dimen/_25dp"
+            android:background="@drawable/back_ground_save"
+            android:backgroundTint="@color/white"
+            android:text="@string/save"
+            android:textSize="@dimen/_18sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolChange" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

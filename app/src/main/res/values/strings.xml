@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Mock_Off_Project</string>
+    <string name="contentDescription">contentDescription</string>
+    <string name="set_up_a_monthly_budget_goal">Set up a monthly budget goal</string>
+    <string name="total_budget_is">Total budget is</string>
+    <string name="_1_500">1,500</string>
+    <string name="cafe">Cafe</string>
+    <string name="_400">$ 400</string>
+    <string name="doLa">$</string>
+    <string name="_400_doLa">400</string>
+    <string name="normal">Normal</string>
+    <string name="sometimes_you_can_eat_in_cafe_up_to_3_of_economy">Sometimes, you can eat in cafe Up to 3% of economy</string>
+    <string name="save">Save</string>
+    <string name="house">House</string>
+    <string name="gym">Gym</string>
+    <string name="love">Love</string>
+    <string name="taxi">Taxi</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="are_you_crazy">Are you crazy ?</string>
+    <string name="eat_in_restaurants_every_day_blow_off_30_of_money">Eat in restaurants every day Blow off 30% of money</string>
+</resources>

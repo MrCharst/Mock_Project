@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_match_content"
+    android:layout_height="wrap_content">
+
+
+    <com.example.mock_off_project.custom.ItemLayout
+        android:layout_marginStart="@dimen/_50dp"
+        android:id="@+id/item"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_80dp" />
+
+    <com.example.mock_off_project.custom.ItemLayout
+        android:id="@+id/item1"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_80dp" />
+
+    <com.example.mock_off_project.custom.ItemLayout
+        android:id="@+id/item2"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_80dp" />
+
+    <com.example.mock_off_project.custom.ItemLayout
+        android:id="@+id/item3"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_80dp" />
+
+    <com.example.mock_off_project.custom.ItemLayout
+        android:id="@+id/item4"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_80dp" />
+
+    <com.example.mock_off_project.custom.ItemLayout
+        android:id="@+id/item5"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_80dp" />
+</LinearLayout>
