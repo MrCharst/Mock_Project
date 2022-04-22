@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="color_cafe">#3F51B5</color>
+    <color name="color_cafe">#2b18ae</color>
     <color name="cafe_background">#422be2</color>
     <color name="color_gym">#F3DC14</color>
     <color name="gym_background">#FFEB3B</color>
@@ -18,8 +18,8 @@
     <color name="color_taxi">#009688</color>
     <color name="taxi_background">#08BDAC</color>
     <color name="background">#F6F6F6</color>
-    <color name="color_other">#FF9800</color>
-    <color name="other_background">#FF5722</color>
+    <color name="color_other">#FF5722</color>
+    <color name="other_background">#FF9800</color>
     <color name="_4e4e4e">#4e4e4e</color>
     <color name="_656161">#656161</color>
     <color name="_c9c9c9">#c9c9c9</color>

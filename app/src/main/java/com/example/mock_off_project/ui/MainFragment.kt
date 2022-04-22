@@ -33,6 +33,9 @@ import com.example.mock_off_project.untils.Companion.Companion.TITLE_SMALL
 import com.example.mock_off_project.untils.Delegate
 import com.example.mock_off_project.viewmodel.ItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -148,7 +151,7 @@ class MainFragment : Fragment() {
             arrItem = it
             for (i in it) {
                 sum += i.value
-                binding.tvTotalMoney.text = sum.toString()
+                binding.tvTotalMoney.text = formatSumMoney(sum)
             }
             if (check) {
                 binding.tvDisplayMoney.text = it[0].value.toString()
@@ -156,6 +159,13 @@ class MainFragment : Fragment() {
                 check = false
             }
         })
+    }
+    private fun formatSumMoney(sum: Int): String {
+        val decimalFormat = DecimalFormat("#,###")
+        val decimalFormatSymbols = DecimalFormatSymbols(Locale.getDefault())
+        decimalFormatSymbols.groupingSeparator = ','
+        decimalFormat.decimalFormatSymbols = decimalFormatSymbols
+        return decimalFormat.format(sum).toString()
     }
     private fun handlerLine() {
         binding.lineRuleHorizontal.setOnScrollChangeListener { view, l, t, oldl, oldt ->

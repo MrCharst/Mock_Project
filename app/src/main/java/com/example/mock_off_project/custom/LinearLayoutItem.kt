@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -19,6 +20,7 @@ import com.example.mock_off_project.R
 import com.example.mock_off_project.databinding.LinearItemBinding
 import com.example.mock_off_project.model.Item
 import com.example.mock_off_project.untils.Delegate
+import kotlinx.coroutines.delay
 import kotlin.math.abs
 
 
@@ -89,244 +91,18 @@ class LinearLayoutItem : LinearLayout {
                 val deltaX: Float = x2 - x1
                 if (abs(deltaX) > MIN_DISTANCE) {
                     if (x2 < x1) {
-                        val index: Int
                         if (currentItem < arrItem.size - 1) {
-                            for (i in 0 until arrItem.size) {
-                                val translate = arrItem[0].x - arrItem[0].marginStart
-                                ObjectAnimator.ofFloat(
-                                    arrItem[i],
-                                    View.TRANSLATION_X,
-                                    translate,
-                                    translate - arrItem[currentItem + 1].width - arrItem[currentItem + 1].marginEnd
-                                ).setDuration(700).start()
-                            }
-
-                            //update item tại vị trí thứ nhất khi kéo về bên trái
-                            val widthCurrent = arrItem[currentItem].width
-                            val widthUpdate = arrItem[currentItem + 1].width
-                            index = currentItem
-                            val widthAnimator = ValueAnimator.ofInt(widthCurrent, widthUpdate)
-                            widthAnimator.addUpdateListener {
-                                arrItem[index].updateLayoutParams {
-                                    width = it.animatedValue as Int
-                                }
-                            }
-                            widthAnimator.duration = 700
-                            widthAnimator.start()
-
-                            val colorAnimator =
-                                ValueAnimator.ofArgb(
-                                    ContextCompat.getColor(
-                                        context,
-                                        listArr[currentItem].color
-                                    ), ContextCompat.getColor(context, R.color.white)
-                                )
-                            colorAnimator.apply {
-                                addUpdateListener {
-                                    if (index == 0) {
-                                        arrItem[index].binding.colorItem.backgroundTintList =
-                                            AppCompatResources.getColorStateList(
-                                                context, R.color.white
-                                            )
-                                    } else {
-                                        val gradientDrawable =
-                                            (arrItem[index].binding.colorItem.background as GradientDrawable).mutate()
-                                        (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
-                                    }
-                                }
-                                duration = 1500
-                                start()
-                            }
-
-                            val colorAnimatorBack =
-                                ValueAnimator.ofArgb(
-                                    ContextCompat.getColor(
-                                        context,
-                                        listArr[currentItem].color
-                                    ), Color.TRANSPARENT
-                                )
-                            colorAnimatorBack.apply {
-                                addUpdateListener {
-                                    val gradientDrawable =
-                                        (arrItem[index].binding.item.background as GradientDrawable).mutate()
-                                    (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
-                                }
-                                duration = 1000
-                                start()
-                            }
+                            translate(arrItem[currentItem + 1].width + arrItem[currentItem + 1].marginEnd)
+                            rightToLeftUnFocus(currentItem)
                             currentItem++
-                            Delegate.mainFragment.binding.tvDisplayMoney.text =
-                                listArr[currentItem].value.toString()
-                            Delegate.mainFragment.binding.lineRuleHorizontal.smoothScrollTo(
-                                listArr[currentItem].value,
-                                0
-                            )
-                            passPosition?.invoke(listArr[currentItem])
-                            arrItem[currentItem].binding.linearLayoutItem.visibility = VISIBLE
-
-
-                            val widthCurrent1 = arrItem[currentItem].width
-                            val widthUpdate1 = arrItem[currentItem - 1].width
-                            val widthAnimator1 = ValueAnimator.ofInt(widthCurrent1, widthUpdate1)
-                            widthAnimator1.addUpdateListener {
-                                arrItem[currentItem].updateLayoutParams {
-                                    width = it.animatedValue as Int
-                                }
-                            }
-                            widthAnimator1.duration = 700
-                            widthAnimator1.start()
-
-
-                            val colorAnimator1 =
-                                ValueAnimator.ofArgb(
-                                    ContextCompat.getColor(context, R.color.white),
-                                    ContextCompat.getColor(context, listArr[currentItem].color)
-                                )
-                            colorAnimator1.apply {
-                                addUpdateListener {
-                                    val gradientDrawable =
-                                        (arrItem[currentItem].binding.colorItem.background as GradientDrawable).mutate()
-                                    (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
-                                }
-                                duration = 1000
-                                start()
-                            }
-
-                            val colorAnimatorBack1 =
-                                ValueAnimator.ofArgb(
-                                    Color.TRANSPARENT,
-                                    ContextCompat.getColor(
-                                        context,
-                                        listArr[currentItem].colorBackGround
-                                    )
-                                )
-                            colorAnimatorBack1.apply {
-                                addUpdateListener {
-                                    val gradientDrawable =
-                                        (arrItem[currentItem].binding.item.background as GradientDrawable).mutate()
-                                    (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
-                                }
-                                duration = 1000
-                                start()
-                            }
+                            rightToLeftFocus(currentItem)
                         }
                     } else {
-                        val index: Int
                         if (currentItem > 0) {
-                            for (i in 0 until arrItem.size) {
-                                val translate = arrItem[0].x - arrItem[0].marginStart
-                                ObjectAnimator.ofFloat(
-                                    arrItem[i],
-                                    View.TRANSLATION_X,
-                                    translate,
-                                    translate + arrItem[currentItem - 1].width + arrItem[currentItem - 1].marginEnd
-                                ).setDuration(700).start()
-                            }
-                            index =currentItem
-                            val widthCurrent = arrItem[currentItem].width
-                            val widthUpdate = arrItem[currentItem-1].width
-                            val widthAnimator = ValueAnimator.ofInt(widthCurrent, widthUpdate)
-                            widthAnimator.addUpdateListener {
-                                arrItem[index].updateLayoutParams {
-                                    width = it.animatedValue as Int
-                                }
-                            }
-                            widthAnimator.duration = 700
-                            widthAnimator.start()
-
-                            val colorAnimator =
-                                ValueAnimator.ofArgb(
-                                    ContextCompat.getColor(context, listArr[currentItem].color),
-                                    ContextCompat.getColor(context, R.color.white)
-                                )
-                            colorAnimator.apply {
-                                addUpdateListener {
-                                        val gradientDrawable =
-                                            (arrItem[index].binding.colorItem.background as GradientDrawable).mutate()
-                                        (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
-
-                                }
-                                duration = 1000
-                                start()
-                            }
-
-                            val colorAnimatorBack =
-                                ValueAnimator.ofArgb(
-                                    ContextCompat.getColor(
-                                        context,
-                                        listArr[currentItem].colorBackGround
-                                    )
-                                    ,Color.TRANSPARENT
-
-                                )
-                            colorAnimatorBack.apply {
-                                addUpdateListener {
-                                    val gradientDrawable =
-                                        (arrItem[index].binding.item.background as GradientDrawable).mutate()
-                                    (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
-                                }
-                                duration = 1000
-                                start()
-                            }
+                            translate(- arrItem[currentItem - 1].width - arrItem[currentItem - 1].marginEnd)
+                            leftToRightUnFocus(currentItem)
                             currentItem--
-                            Delegate.mainFragment.binding.tvDisplayMoney.text =
-                                listArr[currentItem].value.toString()
-                            Delegate.mainFragment.binding.lineRuleHorizontal.smoothScrollTo(
-                                listArr[currentItem].value,
-                                0
-                            )
-                            passPosition?.invoke(listArr[currentItem])
-
-
-                            val widthCurrent1 = arrItem[currentItem].width
-                            val widthUpdate1 = arrItem[currentItem + 1].width
-                            val widthAnimator1 = ValueAnimator.ofInt(widthCurrent1, widthUpdate1)
-                            widthAnimator1.addUpdateListener {
-                                arrItem[currentItem].updateLayoutParams {
-                                    width = it.animatedValue as Int
-                                }
-                            }
-                            widthAnimator1.duration = 700
-                            widthAnimator1.start()
-
-                            arrItem[currentItem].binding.linearLayoutItem.visibility = VISIBLE
-                            val colorAnimator1 =
-                                ValueAnimator.ofArgb(
-                                    ContextCompat.getColor(context, R.color.white),
-                                    ContextCompat.getColor(
-                                        context,
-                                        listArr[currentItem].color
-                                    )
-                                )
-                            colorAnimator1.apply {
-                                addUpdateListener {
-                                  if (currentItem==0){
-                                      arrItem[currentItem].binding.colorItem.backgroundTintList =
-                                          AppCompatResources.getColorStateList(
-                                              context, listArr[currentItem].color
-                                          )
-                                  }
-                                    else{
-                                      val gradientDrawable =
-                                          (arrItem[currentItem].binding.colorItem.background as GradientDrawable).mutate()
-                                      (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
-                                    }
-                                }
-                                duration = 1000
-                                start()
-                            }
-
-                            val colorAnimatorBack1 =
-                                ValueAnimator.ofArgb(Color.TRANSPARENT,ContextCompat.getColor(context,listArr[currentItem].colorBackGround))
-                            colorAnimatorBack1.apply {
-                                addUpdateListener {
-                                    val gradientDrawable =
-                                        (arrItem[currentItem].binding.item.background as GradientDrawable).mutate()
-                                    (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
-                                }
-                                duration = 1000
-                                start()
-                            }
+                            leftToRightFocus(currentItem)
                         }
                     }
 
@@ -336,13 +112,187 @@ class LinearLayoutItem : LinearLayout {
 
         return super.onTouchEvent(event)
     }
+    private fun translate(translateUpdate: Int){
+        for (i in 0 until arrItem.size) {
+            val translate = arrItem[0].x - arrItem[0].marginStart
+            ObjectAnimator.ofFloat(
+                arrItem[i],
+                View.TRANSLATION_X,
+                translate,
+                translate - translateUpdate
+            ).setDuration(500).start()
+        }
+    }
+    private fun rightToLeftUnFocus(currentItem: Int) {
+        updateWith(currentItem, arrItem[currentItem].width, arrItem[currentItem + 1].width)
+        updateColorItem(currentItem, listArr[currentItem].color, R.color.white)
+        updateColorBack(currentItem, listArr[currentItem].colorBackGround)
+    }
+
+    private fun updateColorBack(currentItem: Int, colorCurrentBack: Int) {
+        val index = currentItem
+        val colorAnimatorBack =
+            ValueAnimator.ofArgb(
+                ContextCompat.getColor(
+                    context,
+                    colorCurrentBack
+                ), Color.TRANSPARENT
+            )
+        colorAnimatorBack.apply {
+            addUpdateListener {
+                val gradientDrawable =
+                    (arrItem[index].binding.item.background as GradientDrawable).mutate()
+                (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
+            }
+            duration = 400
+            start()
+        }
+    }
+
+    private fun updateColorItem(currentItem: Int, colorCurrent: Int, colorUpdate: Int) {
+        val colorAnimator =
+            ValueAnimator.ofArgb(
+                ContextCompat.getColor(
+                    context,
+                    colorCurrent
+                ), ContextCompat.getColor(context, colorUpdate)
+            )
+        colorAnimator.apply {
+            addUpdateListener {
+                if (currentItem == 0) {
+                    arrItem[currentItem].binding.colorItem.backgroundTintList =
+                        AppCompatResources.getColorStateList(
+                            context, R.color.white
+                        )
+                } else {
+                    val gradientDrawable =
+                        (arrItem[currentItem].binding.colorItem.background as GradientDrawable).mutate()
+                    (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
+                }
+            }
+            duration = 500
+            start()
+        }
+    }
+
+    private fun updateWith(currentItem: Int, widthCurrent: Int, widthUpdate: Int) {
+        val index = currentItem
+        val widthAnimator = ValueAnimator.ofInt(widthCurrent, widthUpdate)
+        widthAnimator.addUpdateListener {
+            arrItem[index].updateLayoutParams {
+                width = it.animatedValue as Int
+            }
+        }
+        widthAnimator.duration = 500
+        widthAnimator.start()
+    }
+
+    private fun rightToLeftFocus(currentItem: Int) {
+        passData()
+        arrItem[currentItem].binding.linearLayoutItem.visibility = VISIBLE
+        updateWith(currentItem, arrItem[currentItem].width, arrItem[currentItem - 1].width)
+        updateColorItem(currentItem, R.color.white, listArr[currentItem].color)
+        val colorAnimatorBack =
+            ValueAnimator.ofArgb(
+                Color.TRANSPARENT,
+                ContextCompat.getColor(
+                    context,
+                    listArr[currentItem].colorBackGround
+                )
+            )
+        colorAnimatorBack.apply {
+            addUpdateListener {
+                val gradientDrawable =
+                    (arrItem[currentItem].binding.item.background as GradientDrawable).mutate()
+                (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
+            }
+            duration = 500
+            start()
+        }
+    }
+    private fun passData() {
+        Delegate.mainFragment.binding.tvDisplayMoney.text =
+            listArr[currentItem].value.toString()
+        Delegate.mainFragment.binding.lineRuleHorizontal.smoothScrollTo(
+            listArr[currentItem].value,
+            0
+        )
+        passPosition?.invoke(listArr[currentItem])
+    }
+
+    private fun leftToRightFocus(currentItem: Int) {
+        passData()
+        updateWith(currentItem,arrItem[currentItem].width,arrItem[currentItem + 1].width)
+        arrItem[currentItem].binding.linearLayoutItem.visibility = VISIBLE
+        val colorAnimator =
+            ValueAnimator.ofArgb(
+                ContextCompat.getColor(context, R.color.white),
+                ContextCompat.getColor(
+                    context,
+                    listArr[currentItem].color
+                )
+            )
+        colorAnimator.apply {
+            addUpdateListener {
+                if (currentItem == 0) {
+                    arrItem[currentItem].binding.colorItem.backgroundTintList =
+                        AppCompatResources.getColorStateList(
+                            context, listArr[currentItem].color
+                        )
+                } else {
+                    val gradientDrawable =
+                        (arrItem[currentItem].binding.colorItem.background as GradientDrawable).mutate()
+                    (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
+                }
+            }
+            duration = 500
+            start()
+        }
+        val colorAnimatorBack =
+            ValueAnimator.ofArgb(
+                Color.TRANSPARENT,
+                ContextCompat.getColor(
+                    context,
+                    listArr[currentItem].colorBackGround
+                )
+            )
+        colorAnimatorBack.apply {
+            addUpdateListener {
+                val gradientDrawable =
+                    (arrItem[currentItem].binding.item.background as GradientDrawable).mutate()
+                (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
+            }
+            duration = 500
+            start()
+        }
+    }
+    private fun leftToRightUnFocus(currentItem: Int) {
+        updateWith(currentItem,arrItem[currentItem].width,arrItem[currentItem - 1].width)
+        val index: Int = currentItem
+        updateColorItem(currentItem,listArr[currentItem].color,R.color.white)
+        val colorAnimatorBack =
+            ValueAnimator.ofArgb(
+                ContextCompat.getColor(
+                    context,
+                    listArr[currentItem].colorBackGround
+                ), Color.TRANSPARENT
+
+            )
+        colorAnimatorBack.apply {
+            addUpdateListener {
+                val gradientDrawable =
+                    (arrItem[index].binding.item.background as GradientDrawable).mutate()
+                (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
+            }
+            duration = 400
+            start()
+        }
+    }
 
     override fun performClick(): Boolean {
-        launchMissile()
+        Log.d("Tag","Clicked")
         return super.performClick()
     }
 
-    private fun launchMissile() {
-        //Log.d("hihi", "Missile launched")
-    }
+
 }
