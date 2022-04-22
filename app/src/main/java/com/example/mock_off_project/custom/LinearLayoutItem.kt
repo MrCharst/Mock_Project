@@ -123,30 +123,17 @@ class LinearLayoutItem : LinearLayout {
             ).setDuration(500).start()
         }
     }
-    private fun rightToLeftUnFocus(currentItem: Int) {
-        updateWith(currentItem, arrItem[currentItem].width, arrItem[currentItem + 1].width)
-        updateColorItem(currentItem, listArr[currentItem].color, R.color.white)
-        updateColorBack(currentItem, listArr[currentItem].colorBackGround)
-    }
 
-    private fun updateColorBack(currentItem: Int, colorCurrentBack: Int) {
+    private fun updateWith(currentItem: Int, widthCurrent: Int, widthUpdate: Int) {
         val index = currentItem
-        val colorAnimatorBack =
-            ValueAnimator.ofArgb(
-                ContextCompat.getColor(
-                    context,
-                    colorCurrentBack
-                ), Color.TRANSPARENT
-            )
-        colorAnimatorBack.apply {
-            addUpdateListener {
-                val gradientDrawable =
-                    (arrItem[index].binding.item.background as GradientDrawable).mutate()
-                (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
+        val widthAnimator = ValueAnimator.ofInt(widthCurrent, widthUpdate)
+        widthAnimator.addUpdateListener {
+            arrItem[index].updateLayoutParams {
+                width = it.animatedValue as Int
             }
-            duration = 400
-            start()
         }
+        widthAnimator.duration = 500
+        widthAnimator.start()
     }
 
     private fun updateColorItem(currentItem: Int, colorCurrent: Int, colorUpdate: Int) {
@@ -175,18 +162,30 @@ class LinearLayoutItem : LinearLayout {
         }
     }
 
-    private fun updateWith(currentItem: Int, widthCurrent: Int, widthUpdate: Int) {
+    private fun updateColorBack(currentItem: Int, colorCurrentBack: Int) {
         val index = currentItem
-        val widthAnimator = ValueAnimator.ofInt(widthCurrent, widthUpdate)
-        widthAnimator.addUpdateListener {
-            arrItem[index].updateLayoutParams {
-                width = it.animatedValue as Int
+        val colorAnimatorBack =
+            ValueAnimator.ofArgb(
+                ContextCompat.getColor(
+                    context,
+                    colorCurrentBack
+                ), Color.TRANSPARENT
+            )
+        colorAnimatorBack.apply {
+            addUpdateListener {
+                val gradientDrawable =
+                    (arrItem[index].binding.item.background as GradientDrawable).mutate()
+                (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
             }
+            duration = 400
+            start()
         }
-        widthAnimator.duration = 500
-        widthAnimator.start()
     }
-
+    private fun rightToLeftUnFocus(currentItem: Int) {
+        updateWith(currentItem, arrItem[currentItem].width, arrItem[currentItem + 1].width)
+        updateColorItem(currentItem, listArr[currentItem].color, R.color.white)
+        updateColorBack(currentItem, listArr[currentItem].colorBackGround)
+    }
     private fun rightToLeftFocus(currentItem: Int) {
         passData()
         arrItem[currentItem].binding.linearLayoutItem.visibility = VISIBLE
