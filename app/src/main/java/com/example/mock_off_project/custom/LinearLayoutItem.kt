@@ -63,6 +63,8 @@ class LinearLayoutItem : LinearLayout {
         initData()
     }
 
+
+    //attach data to each item
     private fun initData() {
         for (i in listArr.indices) {
             for (a in arrItem.indices) {
@@ -70,6 +72,7 @@ class LinearLayoutItem : LinearLayout {
                     arrItem[a].setData(listArr[i])
                 }
             }
+            //default display item 0
             arrItem[currentItem].binding.colorItem.backgroundTintList =
                 AppCompatResources.getColorStateList(context, listArr[currentItem].color)
             arrItem[currentItem].binding.item.backgroundTintList =
@@ -90,6 +93,8 @@ class LinearLayoutItem : LinearLayout {
                 x2 = event.x
                 val deltaX: Float = x2 - x1
                 if (abs(deltaX) > MIN_DISTANCE) {
+
+                    //when right to left
                     if (x2 < x1) {
                         if (currentItem < arrItem.size - 1) {
                             translate(arrItem[currentItem + 1].width + arrItem[currentItem + 1].marginEnd)
@@ -97,7 +102,9 @@ class LinearLayoutItem : LinearLayout {
                             currentItem++
                             rightToLeftFocus(currentItem)
                         }
-                    } else {
+                    }
+                    //when left to right
+                    else {
                         if (currentItem > 0) {
                             translate(- arrItem[currentItem - 1].width - arrItem[currentItem - 1].marginEnd)
                             leftToRightUnFocus(currentItem)
@@ -112,6 +119,7 @@ class LinearLayoutItem : LinearLayout {
 
         return super.onTouchEvent(event)
     }
+    //animation translation all item
     private fun translate(translateUpdate: Int){
         for (i in 0 until arrItem.size) {
             val translate = arrItem[0].x - arrItem[0].marginStart
@@ -124,6 +132,8 @@ class LinearLayoutItem : LinearLayout {
         }
     }
 
+
+    //animation update width when swipe
     private fun updateWith(currentItem: Int, widthCurrent: Int, widthUpdate: Int) {
         val index = currentItem
         val widthAnimator = ValueAnimator.ofInt(widthCurrent, widthUpdate)
@@ -136,6 +146,8 @@ class LinearLayoutItem : LinearLayout {
         widthAnimator.start()
     }
 
+
+    //animation update color when swipe
     private fun updateColorItem(currentItem: Int, colorCurrent: Int, colorUpdate: Int) {
         val colorAnimator =
             ValueAnimator.ofArgb(
@@ -162,6 +174,8 @@ class LinearLayoutItem : LinearLayout {
         }
     }
 
+
+    //animation update color back when swipe
     private fun updateColorBack(currentItem: Int, colorCurrentBack: Int) {
         val index = currentItem
         val colorAnimatorBack =
@@ -181,11 +195,30 @@ class LinearLayoutItem : LinearLayout {
             start()
         }
     }
+
+
+    //handler animation item un focus when swipe right to left
     private fun rightToLeftUnFocus(currentItem: Int) {
         updateWith(currentItem, arrItem[currentItem].width, arrItem[currentItem + 1].width)
         updateColorItem(currentItem, listArr[currentItem].color, R.color.white)
         updateColorBack(currentItem, listArr[currentItem].colorBackGround)
     }
+
+
+    //pass item to MainFragment to update
+    private fun passData() {
+        Delegate.mainFragment.binding.tvDisplayMoney.text =
+            listArr[currentItem].value.toString()
+        Delegate.mainFragment.binding.lineRuleHorizontal.smoothScrollTo(
+            listArr[currentItem].value,
+            0
+        )
+        passPosition?.invoke(listArr[currentItem])
+    }
+
+
+
+    //handler animation item focus when swipe right to left
     private fun rightToLeftFocus(currentItem: Int) {
         passData()
         arrItem[currentItem].binding.linearLayoutItem.visibility = VISIBLE
@@ -209,16 +242,8 @@ class LinearLayoutItem : LinearLayout {
             start()
         }
     }
-    private fun passData() {
-        Delegate.mainFragment.binding.tvDisplayMoney.text =
-            listArr[currentItem].value.toString()
-        Delegate.mainFragment.binding.lineRuleHorizontal.smoothScrollTo(
-            listArr[currentItem].value,
-            0
-        )
-        passPosition?.invoke(listArr[currentItem])
-    }
 
+    //handler animation item  focus when swipe left to right
     private fun leftToRightFocus(currentItem: Int) {
         passData()
         updateWith(currentItem,arrItem[currentItem].width,arrItem[currentItem + 1].width)
@@ -265,6 +290,8 @@ class LinearLayoutItem : LinearLayout {
             start()
         }
     }
+
+    //handler animation item  un focus when swipe left to right
     private fun leftToRightUnFocus(currentItem: Int) {
         updateWith(currentItem,arrItem[currentItem].width,arrItem[currentItem - 1].width)
         val index: Int = currentItem

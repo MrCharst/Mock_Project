@@ -64,6 +64,8 @@ class MainFragment : Fragment() {
         updateItem()
     }
 
+
+    //when click Save will update value
     private fun updateItem() {
         binding.linearLayout.passPosition = { item ->
             binding.btnSave.setOnClickListener {
@@ -83,6 +85,8 @@ class MainFragment : Fragment() {
     }
 
 
+
+    //insert Data and check only one more time
     private fun initData() {
         val sharedPreference =
             requireActivity().getSharedPreferences(CHECK_INSERTED, Context.MODE_PRIVATE)
@@ -145,6 +149,8 @@ class MainFragment : Fragment() {
             editor.putString(CHECK, INSERTED)
             editor.apply()
         }
+
+        //get all Item and display Total Money
         itemViewModel.getAllItem().observe(viewLifecycleOwner, Observer {
             binding.linearLayout.getList(it)
             var sum = 0
@@ -160,6 +166,8 @@ class MainFragment : Fragment() {
             }
         })
     }
+
+    //format text Total Money
     private fun formatSumMoney(sum: Int): String {
         val decimalFormat = DecimalFormat("#,###")
         val decimalFormatSymbols = DecimalFormatSymbols(Locale.getDefault())
@@ -167,6 +175,8 @@ class MainFragment : Fragment() {
         decimalFormat.decimalFormatSymbols = decimalFormatSymbols
         return decimalFormat.format(sum).toString()
     }
+
+    //get value in Ruler display text Money
     private fun handlerLine() {
         binding.lineRuleHorizontal.setOnScrollChangeListener { view, l, t, oldl, oldt ->
             binding.tvDisplayMoney.text = l.toString()
@@ -178,6 +188,8 @@ class MainFragment : Fragment() {
         }
     }
 
+
+    //animation when value overload
     private fun animationOverLoad() {
         val number = binding.tvDisplayMoney.text.toString().toInt()
         if (number <= MAX) {
