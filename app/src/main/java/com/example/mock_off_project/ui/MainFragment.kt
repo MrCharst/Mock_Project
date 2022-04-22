@@ -16,20 +16,33 @@ import androidx.lifecycle.Observer
 import com.example.mock_off_project.R
 import com.example.mock_off_project.databinding.FragmentMainBinding
 import com.example.mock_off_project.model.Item
+import com.example.mock_off_project.untils.Companion.Companion.ALPHA_LAST
+import com.example.mock_off_project.untils.Companion.Companion.ALPHA_LAST_MONEY
+import com.example.mock_off_project.untils.Companion.Companion.ALPHA_START
+import com.example.mock_off_project.untils.Companion.Companion.ALPHA_START_MONEY
 import com.example.mock_off_project.untils.Companion.Companion.CAFE
 import com.example.mock_off_project.untils.Companion.Companion.CHECK
 import com.example.mock_off_project.untils.Companion.Companion.CHECK_INSERTED
+import com.example.mock_off_project.untils.Companion.Companion.DURATION
+import com.example.mock_off_project.untils.Companion.Companion.DURATION_TEXT
+import com.example.mock_off_project.untils.Companion.Companion.DURATION_TITLE_TEXT
 import com.example.mock_off_project.untils.Companion.Companion.GYM
 import com.example.mock_off_project.untils.Companion.Companion.HOUSE
 import com.example.mock_off_project.untils.Companion.Companion.INSERTED
 import com.example.mock_off_project.untils.Companion.Companion.LOVE
 import com.example.mock_off_project.untils.Companion.Companion.MAX
 import com.example.mock_off_project.untils.Companion.Companion.OTHER
+import com.example.mock_off_project.untils.Companion.Companion.SCALE_LAST
+import com.example.mock_off_project.untils.Companion.Companion.SCALE_START
 import com.example.mock_off_project.untils.Companion.Companion.TAXI
 import com.example.mock_off_project.untils.Companion.Companion.TEXT_BIG
 import com.example.mock_off_project.untils.Companion.Companion.TEXT_SMALL
 import com.example.mock_off_project.untils.Companion.Companion.TITLE_BIG
 import com.example.mock_off_project.untils.Companion.Companion.TITLE_SMALL
+import com.example.mock_off_project.untils.Companion.Companion.TRANSLATION_LAST
+import com.example.mock_off_project.untils.Companion.Companion.TRANSLATION_START
+import com.example.mock_off_project.untils.Companion.Companion.TRANSLATION_TITLE_LAST
+import com.example.mock_off_project.untils.Companion.Companion.TRANSLATION_TITLE_START
 import com.example.mock_off_project.untils.Delegate
 import com.example.mock_off_project.viewmodel.ItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,7 +58,6 @@ class MainFragment : Fragment() {
     private var currentTv = TITLE_SMALL
     private var arrItem: List<Item> = listOf()
     private var check = true
-    private var checkUpdate = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -182,7 +194,7 @@ class MainFragment : Fragment() {
             binding.tvDisplayMoney.text = l.toString()
             val scaleLine = AnimationUtils.loadAnimation(context, R.anim.scale_view)
             binding.view.startAnimation(scaleLine)
-            ObjectAnimator.ofFloat(binding.tvDisplayMoney, View.ALPHA, 0.5f, 1f).setDuration(500)
+            ObjectAnimator.ofFloat(binding.tvDisplayMoney, View.ALPHA, ALPHA_START_MONEY, ALPHA_LAST_MONEY).setDuration(DURATION)
                 .start()
             animationOverLoad()
         }
@@ -215,16 +227,16 @@ class MainFragment : Fragment() {
     }
 
     private fun animationTextView() {
-        val alphaTvTitleOut = ObjectAnimator.ofFloat(binding.tvTitleOut, View.ALPHA, 1f, 0f)
-        val alphaTitleOut = ObjectAnimator.ofFloat(binding.titleOut, View.ALPHA, 1f, 0f)
-        val alphaTvTitleIn = ObjectAnimator.ofFloat(binding.tvTitleIn, View.ALPHA, 0f, 1f)
-        val alphaTitleIn = ObjectAnimator.ofFloat(binding.titleIn, View.ALPHA, 0f, 1f)
-        val tranTvTitleOut = ObjectAnimator.ofFloat(binding.tvTitleOut, View.TRANSLATION_Y, 0f, 30f)
-        val tranTitleOut = ObjectAnimator.ofFloat(binding.titleOut, View.TRANSLATION_Y, 0f, 30f)
-        val tranTvTitleIn = ObjectAnimator.ofFloat(binding.tvTitleIn, View.TRANSLATION_Y, -30f, 0f)
-        val tranTitleIn = ObjectAnimator.ofFloat(binding.titleIn, View.TRANSLATION_Y, -30f, 0f)
-        val scaleTvTitleOut = ObjectAnimator.ofFloat(binding.tvTitleOut, View.SCALE_Y, 1f, 0.7f)
-        val scaleTitleOut = ObjectAnimator.ofFloat(binding.titleOut, View.SCALE_Y, 1f, 0.7f)
+        val alphaTvTitleOut = ObjectAnimator.ofFloat(binding.tvTitleOut, View.ALPHA, ALPHA_START, ALPHA_LAST)
+        val alphaTitleOut = ObjectAnimator.ofFloat(binding.titleOut, View.ALPHA, ALPHA_START, ALPHA_LAST)
+        val alphaTvTitleIn = ObjectAnimator.ofFloat(binding.tvTitleIn, View.ALPHA, ALPHA_LAST, ALPHA_START)
+        val alphaTitleIn = ObjectAnimator.ofFloat(binding.titleIn, View.ALPHA, ALPHA_LAST, ALPHA_START)
+        val tranTvTitleOut = ObjectAnimator.ofFloat(binding.tvTitleOut, View.TRANSLATION_Y, TRANSLATION_START, TRANSLATION_LAST)
+        val tranTitleOut = ObjectAnimator.ofFloat(binding.titleOut, View.TRANSLATION_Y, TRANSLATION_START, TRANSLATION_LAST)
+        val tranTvTitleIn = ObjectAnimator.ofFloat(binding.tvTitleIn, View.TRANSLATION_Y, TRANSLATION_TITLE_START, TRANSLATION_TITLE_LAST)
+        val tranTitleIn = ObjectAnimator.ofFloat(binding.titleIn, View.TRANSLATION_Y, TRANSLATION_TITLE_START, TRANSLATION_TITLE_LAST)
+        val scaleTvTitleOut = ObjectAnimator.ofFloat(binding.tvTitleOut, View.SCALE_Y, SCALE_START, SCALE_LAST)
+        val scaleTitleOut = ObjectAnimator.ofFloat(binding.titleOut, View.SCALE_Y, SCALE_START, SCALE_LAST)
         val animatorSetTV = AnimatorSet()
         animatorSetTV.apply {
             playTogether(
@@ -234,13 +246,13 @@ class MainFragment : Fragment() {
                 tranTvTitleIn,
                 scaleTvTitleOut
             )
-            duration = 500
+            duration = DURATION_TEXT
             start()
         }
         val animatorSetTitle = AnimatorSet()
         animatorSetTitle.apply {
             playTogether(alphaTitleOut, alphaTitleIn, tranTitleOut, tranTitleIn, scaleTitleOut)
-            duration = 1000
+            duration = DURATION_TITLE_TEXT
             start()
         }
     }

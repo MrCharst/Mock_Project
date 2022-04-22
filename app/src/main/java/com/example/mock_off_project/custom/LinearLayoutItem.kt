@@ -19,8 +19,16 @@ import androidx.core.view.updateLayoutParams
 import com.example.mock_off_project.R
 import com.example.mock_off_project.databinding.LinearItemBinding
 import com.example.mock_off_project.model.Item
+import com.example.mock_off_project.untils.Companion.Companion.CHECK
+import com.example.mock_off_project.untils.Companion.Companion.DURATION_TRANSLATE
+import com.example.mock_off_project.untils.Companion.Companion.DURATION_UPDATE_COLOR
+import com.example.mock_off_project.untils.Companion.Companion.DURATION_UPDATE_COLOR_BACK
+import com.example.mock_off_project.untils.Companion.Companion.DURATION_UPDATE_COLOR_BACK_FOCUS
+import com.example.mock_off_project.untils.Companion.Companion.DURATION_UPDATE_COLOR_BACK_UN_FOCUS
+import com.example.mock_off_project.untils.Companion.Companion.DURATION_UPDATE_COLOR_FOCUS
+import com.example.mock_off_project.untils.Companion.Companion.DURATION_WIDTH
+import com.example.mock_off_project.untils.Companion.Companion.INSERTED
 import com.example.mock_off_project.untils.Delegate
-import kotlinx.coroutines.delay
 import kotlin.math.abs
 
 
@@ -106,7 +114,7 @@ class LinearLayoutItem : LinearLayout {
                     //when left to right
                     else {
                         if (currentItem > 0) {
-                            translate(- arrItem[currentItem - 1].width - arrItem[currentItem - 1].marginEnd)
+                            translate(-arrItem[currentItem - 1].width - arrItem[currentItem - 1].marginEnd)
                             leftToRightUnFocus(currentItem)
                             currentItem--
                             leftToRightFocus(currentItem)
@@ -119,8 +127,9 @@ class LinearLayoutItem : LinearLayout {
 
         return super.onTouchEvent(event)
     }
+
     //animation translation all item
-    private fun translate(translateUpdate: Int){
+    private fun translate(translateUpdate: Int) {
         for (i in 0 until arrItem.size) {
             val translate = arrItem[0].x - arrItem[0].marginStart
             ObjectAnimator.ofFloat(
@@ -128,7 +137,7 @@ class LinearLayoutItem : LinearLayout {
                 View.TRANSLATION_X,
                 translate,
                 translate - translateUpdate
-            ).setDuration(500).start()
+            ).setDuration(DURATION_TRANSLATE).start()
         }
     }
 
@@ -142,7 +151,7 @@ class LinearLayoutItem : LinearLayout {
                 width = it.animatedValue as Int
             }
         }
-        widthAnimator.duration = 500
+        widthAnimator.duration = DURATION_WIDTH
         widthAnimator.start()
     }
 
@@ -169,7 +178,7 @@ class LinearLayoutItem : LinearLayout {
                     (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
                 }
             }
-            duration = 500
+            duration = DURATION_UPDATE_COLOR
             start()
         }
     }
@@ -191,7 +200,7 @@ class LinearLayoutItem : LinearLayout {
                     (arrItem[index].binding.item.background as GradientDrawable).mutate()
                 (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
             }
-            duration = 400
+            duration = DURATION_UPDATE_COLOR_BACK
             start()
         }
     }
@@ -217,7 +226,6 @@ class LinearLayoutItem : LinearLayout {
     }
 
 
-
     //handler animation item focus when swipe right to left
     private fun rightToLeftFocus(currentItem: Int) {
         passData()
@@ -238,7 +246,7 @@ class LinearLayoutItem : LinearLayout {
                     (arrItem[currentItem].binding.item.background as GradientDrawable).mutate()
                 (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
             }
-            duration = 500
+            duration = DURATION_UPDATE_COLOR_FOCUS
             start()
         }
     }
@@ -246,7 +254,7 @@ class LinearLayoutItem : LinearLayout {
     //handler animation item  focus when swipe left to right
     private fun leftToRightFocus(currentItem: Int) {
         passData()
-        updateWith(currentItem,arrItem[currentItem].width,arrItem[currentItem + 1].width)
+        updateWith(currentItem, arrItem[currentItem].width, arrItem[currentItem + 1].width)
         arrItem[currentItem].binding.linearLayoutItem.visibility = VISIBLE
         val colorAnimator =
             ValueAnimator.ofArgb(
@@ -269,7 +277,7 @@ class LinearLayoutItem : LinearLayout {
                     (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
                 }
             }
-            duration = 500
+            duration = DURATION_UPDATE_COLOR_FOCUS
             start()
         }
         val colorAnimatorBack =
@@ -286,16 +294,16 @@ class LinearLayoutItem : LinearLayout {
                     (arrItem[currentItem].binding.item.background as GradientDrawable).mutate()
                 (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
             }
-            duration = 500
+            duration = DURATION_UPDATE_COLOR_BACK_FOCUS
             start()
         }
     }
 
     //handler animation item  un focus when swipe left to right
     private fun leftToRightUnFocus(currentItem: Int) {
-        updateWith(currentItem,arrItem[currentItem].width,arrItem[currentItem - 1].width)
+        updateWith(currentItem, arrItem[currentItem].width, arrItem[currentItem - 1].width)
         val index: Int = currentItem
-        updateColorItem(currentItem,listArr[currentItem].color,R.color.white)
+        updateColorItem(currentItem, listArr[currentItem].color, R.color.white)
         val colorAnimatorBack =
             ValueAnimator.ofArgb(
                 ContextCompat.getColor(
@@ -310,13 +318,13 @@ class LinearLayoutItem : LinearLayout {
                     (arrItem[index].binding.item.background as GradientDrawable).mutate()
                 (gradientDrawable as GradientDrawable).setColor(it.animatedValue as Int)
             }
-            duration = 400
+            duration = DURATION_UPDATE_COLOR_BACK_UN_FOCUS
             start()
         }
     }
 
     override fun performClick(): Boolean {
-        Log.d("Tag","Clicked")
+        Log.d(CHECK, INSERTED)
         return super.performClick()
     }
 
