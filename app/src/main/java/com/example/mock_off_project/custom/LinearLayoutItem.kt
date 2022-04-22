@@ -232,12 +232,16 @@ class LinearLayoutItem : LinearLayout {
         arrItem[currentItem].binding.linearLayoutItem.visibility = VISIBLE
         updateWith(currentItem, arrItem[currentItem].width, arrItem[currentItem - 1].width)
         updateColorItem(currentItem, R.color.white, listArr[currentItem].color)
+        updateColorBackRightToLeftFocus(currentItem, listArr[currentItem].colorBackGround)
+    }
+
+    private fun updateColorBackRightToLeftFocus(currentItem: Int, colorUpdate: Int) {
         val colorAnimatorBack =
             ValueAnimator.ofArgb(
                 Color.TRANSPARENT,
                 ContextCompat.getColor(
                     context,
-                    listArr[currentItem].colorBackGround
+                    colorUpdate
                 )
             )
         colorAnimatorBack.apply {
@@ -256,12 +260,21 @@ class LinearLayoutItem : LinearLayout {
         passData()
         updateWith(currentItem, arrItem[currentItem].width, arrItem[currentItem + 1].width)
         arrItem[currentItem].binding.linearLayoutItem.visibility = VISIBLE
+        updateColorItemLeftToRightFocus(currentItem, R.color.white, listArr[currentItem].color)
+        updateColorBackLeftToRightFocus(currentItem, listArr[currentItem].colorBackGround)
+    }
+
+    private fun updateColorItemLeftToRightFocus(
+        currentItem: Int,
+        colorCurrent: Int,
+        colorUpdate: Int
+    ) {
         val colorAnimator =
             ValueAnimator.ofArgb(
-                ContextCompat.getColor(context, R.color.white),
+                ContextCompat.getColor(context, colorCurrent),
                 ContextCompat.getColor(
                     context,
-                    listArr[currentItem].color
+                    colorUpdate
                 )
             )
         colorAnimator.apply {
@@ -269,7 +282,7 @@ class LinearLayoutItem : LinearLayout {
                 if (currentItem == 0) {
                     arrItem[currentItem].binding.colorItem.backgroundTintList =
                         AppCompatResources.getColorStateList(
-                            context, listArr[currentItem].color
+                            context, colorUpdate
                         )
                 } else {
                     val gradientDrawable =
@@ -280,12 +293,15 @@ class LinearLayoutItem : LinearLayout {
             duration = DURATION_UPDATE_COLOR_FOCUS
             start()
         }
+    }
+
+    private fun updateColorBackLeftToRightFocus(currentItem: Int, colorUpdate: Int) {
         val colorAnimatorBack =
             ValueAnimator.ofArgb(
                 Color.TRANSPARENT,
                 ContextCompat.getColor(
                     context,
-                    listArr[currentItem].colorBackGround
+                    colorUpdate
                 )
             )
         colorAnimatorBack.apply {
@@ -302,13 +318,17 @@ class LinearLayoutItem : LinearLayout {
     //handler animation item  un focus when swipe left to right
     private fun leftToRightUnFocus(currentItem: Int) {
         updateWith(currentItem, arrItem[currentItem].width, arrItem[currentItem - 1].width)
-        val index: Int = currentItem
         updateColorItem(currentItem, listArr[currentItem].color, R.color.white)
+        updateColorBackLeftToRightUnFocus(currentItem, listArr[currentItem].colorBackGround)
+    }
+
+    private fun updateColorBackLeftToRightUnFocus(currentItem: Int, colorCurrent: Int) {
+        val index: Int = currentItem
         val colorAnimatorBack =
             ValueAnimator.ofArgb(
                 ContextCompat.getColor(
                     context,
-                    listArr[currentItem].colorBackGround
+                    colorCurrent
                 ), Color.TRANSPARENT
 
             )
